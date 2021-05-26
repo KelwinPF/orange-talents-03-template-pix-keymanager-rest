@@ -38,6 +38,13 @@ dependencies {
     implementation("org.hibernate:hibernate-validator:6.1.6.Final")
     testImplementation("io.micronaut:micronaut-http-client")
     testImplementation("org.testcontainers:junit-jupiter")
+    kaptTest "io.micronaut:micronaut-inject-java"
+    kaptTest "io.micronaut:micronaut-inject-java"
+    testImplementation("org.mockito:mockito-core")
+    testImplementation("org.mockito:mockito-inline:3.8.0")
+
+    testImplementation("org.mockito:mockito-junit-jupiter:3.8.0")
+    testImplementation("org.hamcrest:hamcrest-core:2.2")
 
 }
 
