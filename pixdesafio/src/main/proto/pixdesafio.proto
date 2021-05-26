@@ -1,0 +1,109 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "br.com.zup";
+option java_outer_classname = "Keymanager";
+option objc_class_prefix = "HLW";
+import "google/protobuf/timestamp.proto";
+
+package br.com.zup;
+
+service KeymanagerService {
+  rpc send (KeyRequest) returns (KeyResponse) {}
+}
+
+enum TipoChave{
+  UNKNOWN_CHAVE = 0;
+  RANDOM = 1;
+  CELULAR = 2;
+  EMAIL = 3;
+  CPF = 4;
+}
+
+enum TipoConta{
+  UNKNOWN_CONTA = 0;
+  CONTA_CORRENTE = 1;
+  CONTA_POUPANCA = 2;
+}
+
+message KeyRequest {
+  string id_cliente = 1;
+  string chave = 2;
+  TipoChave tipo_chave = 3;
+  TipoConta tipo_conta = 4;
+}
+
+message KeyResponse {
+  string message = 1;
+}
+
+service KeymanagerRemoveService{
+  rpc remove (RemoveKeyRequest) returns (RemoveKeyResponse){}
+}
+
+message RemoveKeyRequest{
+  string pixId = 1;
+  string clientId = 2;
+}
+
+message RemoveKeyResponse{
+  string message = 1;
+}
+
+service KeymanagerConsultaChaveService{
+  rpc consulta(ConsultaChaveRequest) returns (ConsultaChaveResponse){}
+}
+
+message ConsultaChaveRequest{
+  message FiltroPorPixId{
+    string clientId = 1;
+    string pixId = 2;
+  }
+  oneof filtro{
+    FiltroPorPixId pixId = 1;
+    string chave = 2;
+  }
+}
+
+message ConsultaChaveResponse{
+  string pixId = 1;
+  string clientId = 2;
+  ChaveResponse chave = 3;
+
+  message ChaveResponse{
+    string tipo = 1;
+    string chave = 2;
+    ContaResponse conta = 3;
+    google.protobuf.Timestamp criadoEm = 4;
+  }
+
+  message ContaResponse{
+    string tipo = 1;
+    string instituicao = 2;
+    string nomeTitular = 3;
+    string cpfTitular = 4;
+    string agencia = 5;
+    string numero = 6;
+  }
+}
+
+service KeymanagerListaService{
+  rpc lista (ListaKeyRequest) returns (ListaKeyResponse){}
+}
+
+message ListaKeyRequest{
+  string clienteId = 1;
+}
+
+message ListaKeyResponse{
+  message ChavePix{
+    string pixId = 1;
+    TipoChave tipoChave = 2;
+    string chave = 3;
+    TipoConta tipoConta = 4;
+    google.protobuf.Timestamp criadoEm = 5;
+  }
+
+  string clientId = 1;
+  repeated ChavePix chaves = 2;
+}
