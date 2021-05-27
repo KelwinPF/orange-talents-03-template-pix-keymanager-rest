@@ -8,7 +8,7 @@ import java.time.ZoneOffset
 
 @Introspected
 class ConsultaChavePixResponse(consultaChaveResponse:ConsultaChaveResponse) {
-    
+
     val pixId = consultaChaveResponse.pixId
     val tipo = TipoDeChave.getEnum(consultaChaveResponse.chave.tipo).get_value()
 
