@@ -19,8 +19,4 @@ class RegistraChaveController(private val grpcClient: KeymanagerServiceGrpc.Keym
     private fun location(clienteId: String,pixId:String) =
         HttpResponse.uri("/api/v1/clientes/$clienteId/pix/${pixId}")
 
-    @Get(value = "/api/v1/get")
-    fun testa():HttpResponse<Any>{
-        return HttpResponse.created("oie");
-    }
 }
